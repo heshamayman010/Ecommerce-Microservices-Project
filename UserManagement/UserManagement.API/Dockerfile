@@ -22,7 +22,7 @@ RUN dotnet publish "./UserManagement.API/UserManagement.API.csproj" -c $BUILD_CO
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENV MyPostGrHost=postgres
+ENV MyPostGrHost=localhost
 ENV MyPostGrPassword=admin
 ENV MyPostGrPort=5432 
 
