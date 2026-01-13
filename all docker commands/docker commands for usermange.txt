@@ -1,0 +1,9 @@
+to build the image 
+
+docker build -t usermange:V1.1 -f ".\UserManagement.API\Dockerfile" . 
+
+
+
+to run the image :
+
+docker run  -p 9090:9091 -it -e MyPostGrHost=postgres -e MyPostGrPassword=admin -e MyPostGrPort=5432 --network=PostgressNetwork usermange:V1.1
