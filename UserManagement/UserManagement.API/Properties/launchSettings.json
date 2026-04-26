@@ -9,14 +9,17 @@
     }
   },
   "profiles": {
-        "https": {
+    "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7053;http://localhost:5167",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MyPostGrHost": "localhost",
+        "MyPostGrPort": "5432",
+        "MyPostGrPassword": "admin"
       }
     },
 
@@ -27,7 +30,10 @@
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5167",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MyPostGrHost": "localhost",
+        "MyPostGrPort": "5432",
+        "MyPostGrPassword": "admin"
       }
     },
     "IIS Express": {

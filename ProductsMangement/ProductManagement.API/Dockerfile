@@ -19,4 +19,8 @@ RUN dotnet publish "./ProductManagement.API/ProductManagement.API.csproj" -c $BU
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV MYSQL_HOST=localhost
+ENV MYSQL_PASSWORD=admin
+ENV PortNumber=3306
+
 ENTRYPOINT ["dotnet", "ProductManagement.API.dll"]

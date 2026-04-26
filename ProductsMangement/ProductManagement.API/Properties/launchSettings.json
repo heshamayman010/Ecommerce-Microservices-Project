@@ -10,16 +10,18 @@
   },
   "profiles": {
     "https": {
-  "commandName": "Project",
-  "dotnetRunMessages": true,
-  "launchBrowser": true,
-  "launchUrl": "swagger",
-  "applicationUrl": "https://localhost:7228;http://localhost:5095",
-  "environmentVariables": {
-    "ASPNETCORE_ENVIRONMENT": "Development"
-  }
-}
-,
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7228;http://localhost:5095",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MYSQL_HOST": "localhost",
+        "PortNumber": "3306",
+        "MYSQL_PASSWORD": "admin"
+      }
+    },
     "http": {
       "commandName": "Project",
       "dotnetRunMessages": true,
@@ -27,7 +29,10 @@
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5095",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MYSQL_HOST": "localhost",
+        "PortNumber": "3306",
+        "MYSQL_PASSWORD": "admin"
       }
     },
     "IIS Express": {

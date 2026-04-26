@@ -1,0 +1,21 @@
+-- for the user management container :
+to build the image 
+
+docker build -t usermange:V1.1 -f ".\UserManagement.API\Dockerfile" . 
+
+
+
+to run the image :
+
+docker run  -p 9090:9090 -it -e MyPostGrHost=postgres -e MyPostGrPassword=admin -e MyPostGrPort=5432 --network=PostgressNetwork usermange:V1.1
+
+
+
+--------------------------------------------------
+-- for the postgress container :
+
+
+for the postgress :
+ docker run  --name postgres --hostname postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=UserMangement -p 5432:5432 --network=PostgressNetwork -v "E:\ecommerce using micro\DataBase:/docker-entrypoint-initdb.d" postgres:18
+
+

@@ -2,9 +2,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 #this one is the user that we will use in the machine 
 USER app
 WORKDIR /app
-# here we  mention the ports that the machine will listen to 
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 9090
+EXPOSE 9091
 
 # the second layer 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -32,6 +31,10 @@ RUN dotnet publish "./UserManagement.API/UserManagement.API.csproj" -c $BUILD_CO
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV MyPostGrHost=localhost
+ENV MyPostGrPassword=admin
+ENV MyPostGrPort=5432 
+
 ENTRYPOINT ["dotnet", "UserManagement.API.dll"]
 
 
