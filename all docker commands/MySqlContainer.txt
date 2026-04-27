@@ -1,0 +1,2 @@
+docker run -it -e MYSQL_ROOT_PASSWORD=admin --hostname=admin -p 3307:3306 --network=ProductsNetwork -v "E:/ecommerce using micro/ProductsMangement/DatabaseScript:/docker-entrypoint-initdb.d" mysql:8.3.0
+

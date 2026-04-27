@@ -1,0 +1,58 @@
+services:
+  mysql-db:
+    image: mysql:8.3.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - "3307:3306"
+    volumes:
+      - "D:/Micro Services Course/Mine/DataBase/sql1.sql:/docker-entrypoint-initdb.d/sql1.sql"
+    networks:
+      - Ecommerce-network
+
+  product-api:
+    image: heshamayman0/productimage:V1.0
+    container_name: product-api
+    depends_on:
+      - mysql-db
+    environment:
+      - MYSQL_HOST=mysql-db
+      - MYSQL_PASSWORD=admin
+      - PortNumber=3306
+    ports:
+      - "8080:8080"
+    networks:
+      - Ecommerce-network
+
+  postgres-db:
+    image: postgres:18
+    container_name: postgres-db
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: postgres
+      POSTGRES_DB: UserMangement
+    ports:
+      - "5435:5432"
+    volumes:
+      - "D:/Micro Services Course/Mine/DataBase/sql2.sql:/docker-entrypoint-initdb.d/sql2.sql"
+    networks:
+      - Ecommerce-network
+
+  user-api:
+    image: heshamayman0/userimage:V1.0
+    container_name: user-api
+    depends_on:
+      - postgres-db
+    environment:
+      - MyPostGrHost=postgres-db
+      - MyPostGrPassword=admin
+      - MyPostGrPort=5432
+    ports:
+      - "9090:9090"
+    networks:
+      - Ecommerce-network
+
+networks:
+  Ecommerce-network:
+    driver: bridge
