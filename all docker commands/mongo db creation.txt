@@ -1,0 +1,12 @@
+docker run -it --name mongo-db --network ProductsNetwork -p 27017:27017 -e MONGODB_INITDB_ROOT_USERNAME=admin -e MONGODB_INITDB_ROOT_PASSWORD=adminpassword -v "D:\Micro Services Course\Mine\DataBase\MongoDb.js:/docker-entrypoint-initdb.d" -v mongo_data:/data/db mongodb/mongodb-community-server:8.0-ubi8
+
+==> important note :
+The command -v mongo_data:/data/db tells Docker: "Don't save the actual database files inside the container. Save them in a safe place on my computer's hard drive instead."
+
+
+
+
+
+and without it :
+
+docker run -it --name mongo-db --network ProductsNetwork -p 27017:27017 -e MONGODB_INITDB_ROOT_USERNAME=admin -e MONGODB_INITDB_ROOT_PASSWORD=adminpassword -v "D:\Micro Services Course\Mine\DataBase\MongoDb.js:/docker-entrypoint-initdb.d" mongodb/mongodb-community-server:8.0-ubi8
