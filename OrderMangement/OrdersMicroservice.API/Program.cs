@@ -1,7 +1,7 @@
 using OrderMangement.DataAccessLayer;
 using OrderMangement.BusinessLogicLayer;
 using FluentValidation.AspNetCore;
-using OrderMangement.DataAccessLayer.HttpClients;
+using OrderMangement.BusinessLogicLayer.HttpClients;
 using OrderMangement.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);

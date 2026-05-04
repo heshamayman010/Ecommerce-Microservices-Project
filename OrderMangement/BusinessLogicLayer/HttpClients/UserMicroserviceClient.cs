@@ -1,6 +1,6 @@
 using System.Net.Http.Json;
 using OrderMangement.BusinessLogicLayer.DTO;
-namespace OrderMangement.DataAccessLayer.HttpClients;
+namespace OrderMangement.BusinessLogicLayer.HttpClients;
 
 public class UserMicroserviceClient
 {

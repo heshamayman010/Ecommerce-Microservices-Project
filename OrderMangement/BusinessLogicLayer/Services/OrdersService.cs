@@ -6,7 +6,7 @@ using OrderMangement.DataAccessLayer.RepositoryContracts;
 using FluentValidation;
 using FluentValidation.Results;
 using MongoDB.Driver;
-using OrderMangement.DataAccessLayer.HttpClients;
+using OrderMangement.BusinessLogicLayer.HttpClients;
 
 namespace OrderMangement.BusinessLogicLayer.Services;
 
