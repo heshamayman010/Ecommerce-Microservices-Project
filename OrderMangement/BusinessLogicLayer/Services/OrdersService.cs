@@ -6,6 +6,7 @@ using OrderMangement.DataAccessLayer.RepositoryContracts;
 using FluentValidation;
 using FluentValidation.Results;
 using MongoDB.Driver;
+using OrderMangement.DataAccessLayer.HttpClients;
 
 namespace OrderMangement.BusinessLogicLayer.Services;
 
@@ -18,7 +19,9 @@ public class OrdersService : IOrdersService
   private readonly IMapper _mapper;
   private IOrdersRepository _ordersRepository;
 
-  public OrdersService(IOrdersRepository ordersRepository, IMapper mapper, IValidator<OrderAddRequest> orderAddRequestValidator, IValidator<OrderItemAddRequest> orderItemAddRequestValidator, IValidator<OrderUpdateRequest> orderUpdateRequestValidator, IValidator<OrderItemUpdateRequest> orderItemUpdateRequestValidator)
+  private UserMicroserviceClient _usermicorserviceclient;
+
+  public OrdersService(UserMicroserviceClient userMicroserviceClient, IOrdersRepository ordersRepository, IMapper mapper, IValidator<OrderAddRequest> orderAddRequestValidator, IValidator<OrderItemAddRequest> orderItemAddRequestValidator, IValidator<OrderUpdateRequest> orderUpdateRequestValidator, IValidator<OrderItemUpdateRequest> orderItemUpdateRequestValidator)
   {
     _orderAddRequestValidator = orderAddRequestValidator;
     _orderItemAddRequestValidator = orderItemAddRequestValidator;
@@ -26,6 +29,7 @@ public class OrdersService : IOrdersService
     _orderItemUpdateRequestValidator = orderItemUpdateRequestValidator;
     _mapper = mapper;
     _ordersRepository = ordersRepository;
+    _usermicorserviceclient = userMicroserviceClient;
   }
 
 
@@ -46,6 +50,16 @@ public class OrdersService : IOrdersService
     }
 
     // here we will check if the user id exist or not but it is from another microservices 
+    UserDTO? user = await _usermicorserviceclient.GetUserByUserId(orderAddRequest.UserID);
+
+    if (user == null)
+    {
+      throw new ArgumentException("user is not found ");
+    }
+
+
+    //-----------------------
+
 
     foreach (OrderItemAddRequest orderItemAddRequest in orderAddRequest.OrderItems)
     {
@@ -59,9 +73,9 @@ public class OrdersService : IOrdersService
     }
 
 
-    Order orderInput = _mapper.Map<Order>(orderAddRequest); 
+    Order orderInput = _mapper.Map<Order>(orderAddRequest);
 
-    foreach (OrderItem orderItem in orderInput.OrderItems) 
+    foreach (OrderItem orderItem in orderInput.OrderItems)
     {
       orderItem.TotalPrice = orderItem.Quantity * orderItem.UnitPrice;
     }
@@ -70,12 +84,12 @@ public class OrdersService : IOrdersService
 
     Order? addedOrder = await _ordersRepository.AddOrder(orderInput);
 
-    if (addedOrder == null) 
+    if (addedOrder == null)
     {
       return null;
     }
 
-    OrderResponse addedOrderResponse = _mapper.Map<OrderResponse>(addedOrder); 
+    OrderResponse addedOrderResponse = _mapper.Map<OrderResponse>(addedOrder);
 
     return addedOrderResponse;
   }
@@ -108,7 +122,20 @@ public class OrdersService : IOrdersService
       }
     }
 
-    Order orderInput = _mapper.Map<Order>(orderUpdateRequest); 
+    // here we will check if the user id exist or not but it is from another microservices 
+    UserDTO? user = await _usermicorserviceclient.GetUserByUserId(orderUpdateRequest.UserID);
+
+    if (user == null)
+    
+    {
+      throw new ArgumentException("user is not found ");
+    }
+
+
+    //-----------------------
+
+
+    Order orderInput = _mapper.Map<Order>(orderUpdateRequest);
 
     foreach (OrderItem orderItem in orderInput.OrderItems)
     {
@@ -124,7 +151,7 @@ public class OrdersService : IOrdersService
       return null;
     }
 
-    OrderResponse updatedOrderResponse = _mapper.Map<OrderResponse>(updatedOrder); 
+    OrderResponse updatedOrderResponse = _mapper.Map<OrderResponse>(updatedOrder);
 
     return updatedOrderResponse;
   }
@@ -160,9 +187,9 @@ public class OrdersService : IOrdersService
   public async Task<List<OrderResponse?>> GetOrdersByCondition(FilterDefinition<Order> filter)
   {
     IEnumerable<Order?> orders = await _ordersRepository.GetOrdersByCondition(filter);
-    
 
-    IEnumerable<OrderResponse?> orderResponses = _mapper.Map<IEnumerable<OrderResponse>>(orders); 
+
+    IEnumerable<OrderResponse?> orderResponses = _mapper.Map<IEnumerable<OrderResponse>>(orders);
     return orderResponses.ToList();
   }
 
