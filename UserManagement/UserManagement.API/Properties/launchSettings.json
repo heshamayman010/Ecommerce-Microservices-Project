@@ -18,8 +18,11 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "MyPostGrHost": "localhost",
-        "MyPostGrPort": "5432",
-        "MyPostGrPassword": "admin"
+        "MyPostGrPort": "5435",
+        "MyPostGrPassword": "admin",
+        "POSTGRES_DATABASE": "UserMangement",
+        "POSTGRES_USER": "postgres"
+
       }
     },
 
@@ -32,8 +35,11 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "MyPostGrHost": "localhost",
-        "MyPostGrPort": "5432",
+        "MyPostGrPort": "5435",
         "MyPostGrPassword": "admin"
+,       "POSTGRES_DATABASE": "UserMangement",
+        "POSTGRES_USER": "postgres"
+
       }
     },
     "IIS Express": {

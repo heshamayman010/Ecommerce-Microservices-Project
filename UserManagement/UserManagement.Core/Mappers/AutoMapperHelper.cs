@@ -16,5 +16,15 @@ public class AutoMapperHelper : Profile
     .ForMember(dest => dest.Sucess, opt => opt.MapFrom(src => true)) 
       .ForMember(dest => dest.Token, opt => opt.Ignore()).ReverseMap();
       ;
+
+
+
+      CreateMap <ApplicationUser,UserDTO>().
+      ForMember(x=>x.Email,opt=>opt.MapFrom(z=>z.Email)).
+      ForMember(x=>x.UserID,opt=>opt.MapFrom(z=>z.UserID))
+ .     ForMember(x=>x.PersonName,opt=>opt.MapFrom(z=>z.PersonName))
+ .     ForMember(x=>x.Gender,opt=>opt.MapFrom(z=>z.Gender));
+
+  
   }
 }

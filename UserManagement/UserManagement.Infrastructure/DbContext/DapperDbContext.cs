@@ -17,9 +17,11 @@ public class DapperDbContext
    string NewConnectionUsingEnviroment= mymainconnectionstring
    .Replace("$MyPostGrHost",Environment.GetEnvironmentVariable("MyPostGrHost")).
    Replace("$MyPostGrPassword",Environment.GetEnvironmentVariable("MyPostGrPassword")).
+   Replace("$POSTGRES_DATABASE",Environment.GetEnvironmentVariable("POSTGRES_DATABASE")).
+   Replace("$POSTGRES_USER",Environment.GetEnvironmentVariable("POSTGRES_USER")).
    Replace("$MyPostGrPort",Environment.GetEnvironmentVariable("MyPostGrPort"));
 
-    //Create a new NpgsqlConnection with the retrieved connection string
+      // "PostgresConnection": "Host=$MyPostGrHost; Port=$MyPostGrPort; Database=$POSTGRES_DATABASE; Username=$POSTGRES_USER; Password=$MyPostGrPassword"
 
     _connection = new NpgsqlConnection(NewConnectionUsingEnviroment);
   }

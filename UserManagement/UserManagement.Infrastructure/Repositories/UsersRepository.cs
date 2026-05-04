@@ -40,5 +40,21 @@ internal class UsersRepository : IUsersRepository
       Gender = GenderOptions.Male.ToString()
     };
   }
+
+    public async Task<ApplicationUser?> GetUserByUserID(Guid? userID)
+    {
+
+      var query= "SELECT * FROM public.\"Users\" Where \"UserID\"=@userId";
+
+      var parameter=new {userId=userID};
+
+      using var connection=_dbContext.DbConnection;
+
+      return await connection.QueryFirstOrDefaultAsync<ApplicationUser>(query,parameter);
+
+
+
+    }
+
 }
 

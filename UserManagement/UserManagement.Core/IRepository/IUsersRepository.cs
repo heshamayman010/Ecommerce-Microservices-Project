@@ -8,4 +8,8 @@ public interface IUsersRepository
 
 
   Task<ApplicationUser?> GetUserByEmailAndPassword(string? email, string? password);
+
+
+
+  Task<ApplicationUser?> GetUserByUserID(Guid? userID);
 }

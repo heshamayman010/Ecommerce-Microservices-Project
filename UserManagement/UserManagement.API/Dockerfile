@@ -34,6 +34,9 @@ COPY --from=publish /app/publish .
 ENV MyPostGrHost=localhost
 ENV MyPostGrPassword=admin
 ENV MyPostGrPort=5432 
+ENV POSTGRES_DATABASE=UserMangement
+ENV POSTGRES_USER=postgres
+
 
 ENTRYPOINT ["dotnet", "UserManagement.API.dll"]
 

@@ -34,6 +34,7 @@ public class OrdersController : ControllerBase
   {
     FilterDefinition<Order> filter = Builders<Order>.Filter.Eq(temp => temp.OrderID, orderID);
 
+
     OrderResponse? order = await _ordersService.GetOrderByCondition(filter);
     return order;
   }
@@ -42,7 +43,10 @@ public class OrdersController : ControllerBase
   //GET: /api/Orders/search/productid/{productID}
   [HttpGet("search/productid/{productID}")]
   public async Task<IEnumerable<OrderResponse?>> GetOrdersByProductID(Guid productID)
+
   {
+
+    // builder is a pre defined class used to provide filters 
     FilterDefinition<Order> filter = Builders<Order>.Filter.ElemMatch(temp => temp.OrderItems, 
       Builders<OrderItem>.Filter.Eq(tempProduct => tempProduct.ProductID, productID)
       );

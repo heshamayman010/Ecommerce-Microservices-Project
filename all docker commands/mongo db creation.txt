@@ -9,4 +9,15 @@ The command -v mongo_data:/data/db tells Docker: "Don't save the actual database
 
 and without it :
 
-docker run -it --name mongo-db --network ProductsNetwork -p 27017:27017 -e MONGODB_INITDB_ROOT_USERNAME=admin -e MONGODB_INITDB_ROOT_PASSWORD=adminpassword -v "D:\Micro Services Course\Mine\DataBase\MongoDb.js:/docker-entrypoint-initdb.d" mongodb/mongodb-community-server:8.0-ubi8
+docker run --rm -it --name mongo-db --network ProductsNetwork -p 27017:27017 -e MONGODB_INITDB_ROOT_USERNAME=admin -e MONGODB_INITDB_ROOT_PASSWORD=adminpassword -v "D:\Micro Services Course\Mine\DataBase\:/docker-entrypoint-initdb.d" mongodb/mongodb-community-server:8.0-ubi8
+
+
+
+and to check the data 
+
+docker exec -it mongo-db bash
+mongosh
+show databases
+use OrdersDatabase
+show collections
+db.orders.find()
