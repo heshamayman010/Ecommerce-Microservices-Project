@@ -10,9 +10,9 @@ namespace UserManagement.Infrastructure
             this IServiceCollection services)
         {
 
-                services.AddTransient<DapperDbContext>();
+                services.AddScoped<DapperDbContext>();
 
-    services.AddSingleton<IUsersRepository, UsersRepository>();
+    services.AddScoped<IUsersRepository, UsersRepository>();
             return services;
         }
     }

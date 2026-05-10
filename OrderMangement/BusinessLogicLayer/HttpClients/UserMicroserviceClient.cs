@@ -19,7 +19,7 @@ public class UserMicroserviceClient
         
       HttpResponseMessage response=await  _httpClient.GetAsync($"/api/users/{userid}");
 
-    if (response.IsSuccessStatusCode)
+    if (!response.IsSuccessStatusCode)
         {
             return null;
         }
