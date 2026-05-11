@@ -122,9 +122,16 @@ List<ProductDto>Products =new List<ProductDto>();
         _mapper.Map<ProductDto,OrderItemResponse>(orderproduct,orderitem);
       
       }
+        if (user != null)
+          {
+            
+            _mapper.Map<UserDTO,OrderResponse>(user,addedOrderResponse);
+          }
 
     }
     
+
+
     
     return addedOrderResponse;
   }
@@ -179,6 +186,7 @@ Products.Add(product);
     }
 
 
+
     //-----------------------
 
 
@@ -214,6 +222,14 @@ Products.Add(product);
         _mapper.Map<ProductDto,OrderItemResponse>(orderproduct,orderitem);
       
       }
+
+
+    if (user != null)
+          {
+            
+            _mapper.Map<UserDTO,OrderResponse>(user,updatedOrderResponse);
+          }
+
 
     }
     
@@ -259,7 +275,16 @@ Products.Add(product);
         }
         _mapper.Map<ProductDto,OrderItemResponse>(orderproduct,orderitem);
       
+
       }
+    var userback=await _usermicorserviceclient.GetUserByUserId(orderResponse.UserID);
+
+    if (userback != null)
+          {
+            
+            _mapper.Map<UserDTO,OrderResponse>(userback,orderResponse);
+          }
+
 
     return orderResponse;
   }
@@ -296,6 +321,13 @@ Products.Add(product);
         }
         _mapper.Map<ProductDto,OrderItemResponse>(orderproduct,orderitem);
       
+      }
+var userback=await _usermicorserviceclient.GetUserByUserId(orderr.UserID);
+
+if (userback != null)
+      {
+        
+        _mapper.Map<UserDTO,OrderResponse>(userback,orderr);
       }
 
     }
@@ -338,9 +370,22 @@ Products.Add(product);
         _mapper.Map<ProductDto,OrderItemResponse>(orderproduct,orderitem);
       
       }
+var userback=await _usermicorserviceclient.GetUserByUserId(orderr.UserID);
+
+if (userback != null)
+      {
+        
+        _mapper.Map<UserDTO,OrderResponse>(userback,orderr);
+      }
 
     }
     
+
+// now we want to add the data of the user for the orders 
+
+
+
+
     return orderResponses.ToList();
   }
 }

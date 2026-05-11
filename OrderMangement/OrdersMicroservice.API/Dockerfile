@@ -9,10 +9,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["OrderMangement.API/OrdersMicroservice.API.csproj", "OrderMangement.API/"]
-RUN dotnet restore "./OrderMangement.API/OrdersMicroservice.API.csproj"
+COPY ["OrdersMicroservice.API/OrdersMicroservice.API.csproj", "OrdersMicroservice.API/"]
+RUN dotnet restore "./OrdersMicroservice.API/OrdersMicroservice.API.csproj"
 COPY . .
-WORKDIR "/src/OrderMangement.API"
+WORKDIR "/src/OrdersMicroservice.API"
 RUN dotnet build "./OrdersMicroservice.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
@@ -29,4 +29,4 @@ ENV UserMicroServiceName=localhost
 ENV UserMicroServicePort=9090
 ENV ProductsMicroServicePort=8080
 ENV ProductsMicroServiceName=localhost
-ENTRYPOINT ["dotnet", "OrderMangement.API.dll"]
+ENTRYPOINT ["dotnet", "OrdersMicroservice.API.dll"]

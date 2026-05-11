@@ -1,0 +1,1 @@
+docker run -it --name orders -p 5043:8080 -e MONGODB_HOST=localhost -e MONGODB_PORT=27017 -e MONGODB_DATABASE=OrderMangement -e MONGODB_USER=admin -e MONGODB_PASSWORD=adminpassword -e UserMicroServiceName=localhost -e UserMicroServicePort=9090 -e ProductsMicroServiceName=localhost -e ProductsMicroServicePort=8080 --network Ecommerce heshamayman0/orderimage:V1.2

@@ -4,15 +4,16 @@ services:
     container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: ProductsDataBase
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
-      - "D:/Micro Services Course/Mine/DataBase/sql1.sql:/docker-entrypoint-initdb.d/sql1.sql"
+      - "D:/Micro Services Course/Mine/DataBase/MySql/sql1.sql:/docker-entrypoint-initdb.d/sql1.sql"
     networks:
       - Ecommerce-network
 
   product-api:
-    image: heshamayman0/productimage:V1.0
+    image: heshamayman0/productimage:v1.2
     container_name: product-api
     depends_on:
       - mysql-db
@@ -20,6 +21,7 @@ services:
       - MYSQL_HOST=mysql-db
       - MYSQL_PASSWORD=admin
       - PortNumber=3306
+      - MYSQL_DATABASE=ProductsDataBase
     ports:
       - "8080:8080"
     networks:
@@ -35,12 +37,12 @@ services:
     ports:
       - "5435:5432"
     volumes:
-      - "D:/Micro Services Course/Mine/DataBase/sql2.sql:/docker-entrypoint-initdb.d/sql2.sql"
+      - "D:/Micro Services Course/Mine/DataBase/postgress/sql2.sql:/docker-entrypoint-initdb.d/sql2.sql"
     networks:
       - Ecommerce-network
 
   user-api:
-    image: heshamayman0/userimage:V1.0
+    image: heshamayman0/userimage:V1.2
     container_name: user-api
     depends_on:
       - postgres-db
@@ -48,8 +50,22 @@ services:
       - MyPostGrHost=postgres-db
       - MyPostGrPassword=admin
       - MyPostGrPort=5432
+      - MyPostGrDatabase=UserMangement
     ports:
       - "9090:9090"
+    networks:
+      - Ecommerce-network
+
+  mongodb:
+    image: mongodb/mongodb-community-server:8.0-ubi8
+    container_name: mongo-db
+    environment:
+      MONGODB_INITDB_ROOT_USERNAME: admin
+      MONGODB_INITDB_ROOT_PASSWORD: adminpassword
+    ports:
+      - "27017:27017"
+    volumes:
+      - "D:/Micro Services Course/Mine/DataBase/mongo:/docker-entrypoint-initdb.d"
     networks:
       - Ecommerce-network
 

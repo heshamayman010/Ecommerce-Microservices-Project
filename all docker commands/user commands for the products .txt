@@ -1,8 +1,14 @@
+
+// to stop the my sql from the machine 
+# Run as Administrator
+net stop MySQL84
+net stop MySQL82
+
+
 docker run -it -e MYSQL_ROOT_PASSWORD=admin --hostname=admin -p 3306:3306 mysql:8.3.0
 
 the new one with the network and also the script execution 
 
-docker run -it -e MYSQL_ROOT_PASSWORD=admin --hostname=admin -p 3307:3306 --network=ProductsNetwork -v "E:/ecommerce using micro/ProductsMangement/DatabaseScript:/docker-entrypoint-initdb.d" mysql:8.3.0
 
 
 
@@ -10,3 +16,7 @@ docker run -it -e MYSQL_ROOT_PASSWORD=admin --hostname=admin -p 3307:3306 --netw
 
 docker run -p 8080:8080 --network=ProductsNetwork -e MYSQL_HOST=admin -e MYSQL_PASSWORD=admin -e PortNumber=3306  heshamayman0/ecommerce.productmangement:V1.0
 
+
+for the my sql 
+
+ docker run -it -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=ProductsDataBase --hostname=admin -p 3306:3306 --network=ProductsNetwork -v "D:\Micro Services Course\Mine\DataBase\MySql\sql1.sql:/docker-entrypoint-initdb.d/sql1.sql" mysql:8.3.0
