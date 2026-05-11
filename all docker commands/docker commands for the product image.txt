@@ -1,0 +1,4 @@
+// to create the image from the docker file 
+ docker build -t productimage:v1.0 -f ProductManagement.API/Dockerfile .
+
+

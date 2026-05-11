@@ -1,3 +1,12 @@
+// to stop the my sql from the machine 
+# Run as Administrator
+net stop MySQL84
+net stop MySQL82
+
+
+
+
+
 
 // to get the MySQL imgae and run it at the firs ttime if you don't have 
 
@@ -7,7 +16,7 @@ docker run -it -e MYSQL_ROOT_PASSWORD=admin --hostname=admin -p 3306:3306 mysql:
 
 // the new one with the network and also the script execution  for the my sql image 
 
-docker run -it -e MYSQL_ROOT_PASSWORD=admin --hostname=admin -p 3307:3306 --network=ProductsNetwork -v "D:\Micro Services Course\Mine\sql1.sql:/docker-entrypoint-initdb.d/sql1.sql" mysql:8.3.0
+docker run -it -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=ProductsDataBase --hostname=admin -p 3306:3306 --network=ProductsNetwork -v "D:\Micro Services Course\Mine\DataBase\MySql\sql1.sql:/docker-entrypoint-initdb.d/sql1.sql" mysql:8.3.0
 
 
 

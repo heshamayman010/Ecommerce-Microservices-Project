@@ -20,8 +20,10 @@ public class OrdersService : IOrdersService
   private IOrdersRepository _ordersRepository;
 
   private UserMicroserviceClient _usermicorserviceclient;
+  private ProductMicroserviceClient _ProductMicroserviceClient;
 
-  public OrdersService(UserMicroserviceClient userMicroserviceClient, IOrdersRepository ordersRepository, IMapper mapper, IValidator<OrderAddRequest> orderAddRequestValidator, IValidator<OrderItemAddRequest> orderItemAddRequestValidator, IValidator<OrderUpdateRequest> orderUpdateRequestValidator, IValidator<OrderItemUpdateRequest> orderItemUpdateRequestValidator)
+
+  public OrdersService(ProductMicroserviceClient ProductMicroserviceClient,UserMicroserviceClient userMicroserviceClient, IOrdersRepository ordersRepository, IMapper mapper, IValidator<OrderAddRequest> orderAddRequestValidator, IValidator<OrderItemAddRequest> orderItemAddRequestValidator, IValidator<OrderUpdateRequest> orderUpdateRequestValidator, IValidator<OrderItemUpdateRequest> orderItemUpdateRequestValidator)
   {
     _orderAddRequestValidator = orderAddRequestValidator;
     _orderItemAddRequestValidator = orderItemAddRequestValidator;
@@ -30,6 +32,7 @@ public class OrdersService : IOrdersService
     _mapper = mapper;
     _ordersRepository = ordersRepository;
     _usermicorserviceclient = userMicroserviceClient;
+    _ProductMicroserviceClient=ProductMicroserviceClient;
   }
 
 
@@ -49,7 +52,10 @@ public class OrdersService : IOrdersService
       throw new ArgumentException(errors);
     }
 
-    // here we will check if the user id exist or not but it is from another microservices 
+    // here we will check if the user id exist or not but it is from another microservices
+
+    // get it back when working with users 
+
     UserDTO? user = await _usermicorserviceclient.GetUserByUserId(orderAddRequest.UserID);
 
     if (user == null)
@@ -60,6 +66,7 @@ public class OrdersService : IOrdersService
 
     //-----------------------
 
+List<ProductDto>Products =new List<ProductDto>();
 
     foreach (OrderItemAddRequest orderItemAddRequest in orderAddRequest.OrderItems)
     {
@@ -70,6 +77,16 @@ public class OrdersService : IOrdersService
         string errors = string.Join(", ", orderItemAddRequestValidationResult.Errors.Select(temp => temp.ErrorMessage));
         throw new ArgumentException(errors);
       }
+
+
+      // now we need to check for the product is realy in the products or not using the product microservice 
+
+     var product= await _ProductMicroserviceClient.GetProductByProductID(orderItemAddRequest.ProductID);
+     if(product == null)
+      {
+        throw new ArgumentException("Cant find This Product");
+      }
+      Products.Add(product);
     }
 
 
@@ -90,7 +107,25 @@ public class OrdersService : IOrdersService
     }
 
     OrderResponse addedOrderResponse = _mapper.Map<OrderResponse>(addedOrder);
+    if (addedOrderResponse != null)
+    {
+      
+    foreach (var orderitem in addedOrderResponse.OrderItems)
+      {
+        
+        var orderproduct= Products.Where(x=>x.ProductID==orderitem.ProductID).FirstOrDefault();
+      
+        if (orderproduct == null)
+        {
+          continue;
+        }
+        _mapper.Map<ProductDto,OrderItemResponse>(orderproduct,orderitem);
+      
+      }
 
+    }
+    
+    
     return addedOrderResponse;
   }
 
@@ -111,6 +146,8 @@ public class OrdersService : IOrdersService
       throw new ArgumentException(errors);
     }
 
+
+var Products =new List<ProductDto>();
     foreach (OrderItemUpdateRequest orderItemUpdateRequest in orderUpdateRequest.OrderItems)
     {
       ValidationResult orderItemUpdateRequestValidationResult = await _orderItemUpdateRequestValidator.ValidateAsync(orderItemUpdateRequest);
@@ -120,6 +157,16 @@ public class OrdersService : IOrdersService
         string errors = string.Join(", ", orderItemUpdateRequestValidationResult.Errors.Select(temp => temp.ErrorMessage));
         throw new ArgumentException(errors);
       }
+
+      // now we need to check for the product is realy in the products or not using the product microservice 
+
+     var product= await _ProductMicroserviceClient.GetProductByProductID(orderItemUpdateRequest.ProductID);
+     if(product == null)
+      {
+        throw new ArgumentException("Cant find This Product");
+      }
+Products.Add(product);
+
     }
 
     // here we will check if the user id exist or not but it is from another microservices 
@@ -152,6 +199,24 @@ public class OrdersService : IOrdersService
     }
 
     OrderResponse updatedOrderResponse = _mapper.Map<OrderResponse>(updatedOrder);
+    if (updatedOrderResponse != null)
+    {
+      
+    foreach (var orderitem in updatedOrderResponse.OrderItems)
+      {
+        
+        var orderproduct= Products.Where(x=>x.ProductID==orderitem.ProductID).FirstOrDefault();
+      
+        if (orderproduct == null)
+        {
+          continue;
+        }
+        _mapper.Map<ProductDto,OrderItemResponse>(orderproduct,orderitem);
+      
+      }
+
+    }
+    
 
     return updatedOrderResponse;
   }
@@ -179,7 +244,23 @@ public class OrdersService : IOrdersService
     if (order == null)
       return null;
 
+
+
+
     OrderResponse orderResponse = _mapper.Map<OrderResponse>(order);
+        foreach (var orderitem in orderResponse.OrderItems)
+      {
+        
+        var orderproduct=await _ProductMicroserviceClient.GetProductByProductID(orderitem.ProductID);
+      
+        if (orderproduct == null)
+        {
+          continue;
+        }
+        _mapper.Map<ProductDto,OrderItemResponse>(orderproduct,orderitem);
+      
+      }
+
     return orderResponse;
   }
 
@@ -190,6 +271,37 @@ public class OrdersService : IOrdersService
 
 
     IEnumerable<OrderResponse?> orderResponses = _mapper.Map<IEnumerable<OrderResponse>>(orders);
+
+      // now we need to load the product name an category 
+
+      foreach(var orderr in orderResponses)
+    {
+      
+      if (orderr == null)
+      {
+      continue;  
+      }
+
+
+// here we will use the mapped data from the getby condition as we will make it get bakc the data 
+// of the product from the products microservices each time to be updated 
+    foreach (var orderitem in orderr.OrderItems)
+      {
+        
+        var orderproduct=await _ProductMicroserviceClient.GetProductByProductID(orderitem.ProductID);
+      
+        if (orderproduct == null)
+        {
+          continue;
+        }
+        _mapper.Map<ProductDto,OrderItemResponse>(orderproduct,orderitem);
+      
+      }
+
+    }
+    
+
+
     return orderResponses.ToList();
   }
 
@@ -200,6 +312,35 @@ public class OrdersService : IOrdersService
 
 
     IEnumerable<OrderResponse?> orderResponses = _mapper.Map<IEnumerable<OrderResponse>>(orders);
+    
+      // now we need to load the product name an category 
+
+      foreach(var orderr in orderResponses)
+    {
+      
+      if (orderr == null)
+      {
+      continue;  
+      }
+
+
+// here we will use the mapped data from the getby condition as we will make it get bakc the data 
+// of the product from the products microservices each time to be updated 
+    foreach (var orderitem in orderr.OrderItems)
+      {
+        
+        var orderproduct=await _ProductMicroserviceClient.GetProductByProductID(orderitem.ProductID);
+      
+        if (orderproduct == null)
+        {
+          continue;
+        }
+        _mapper.Map<ProductDto,OrderItemResponse>(orderproduct,orderitem);
+      
+      }
+
+    }
+    
     return orderResponses.ToList();
   }
 }

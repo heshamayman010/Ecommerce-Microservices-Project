@@ -8,9 +8,15 @@
         "MONGODB_HOST": "localhost",
         "MONGODB_PORT": "27017",
 
-         "MONGODB_DATABASE":"OrderMangement"
+         "MONGODB_DATABASE":"OrdersDatabase"
       ,"UserMicroServiceName":"localhost"
-      ,"UserMicroServicePort":"9090"
+      ,"UserMicroServicePort":"9090",
+      "ProductsMicroServicePort":"8080",
+"ProductsMicroServiceName":"localhost"
+,"MONGODB_USER": "admin",           
+    "MONGODB_PASSWORD": "adminpassword"
+
+
 
       },
       "dotnetRunMessages": true,
@@ -26,9 +32,15 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "MONGODB_HOST": "localhost",
         "MONGODB_PORT": "27017",
-                 "MONGODB_DATABASE":"OrderMangement"
+                 "MONGODB_DATABASE":"OrdersDatabase"
         ,"UserMicroServiceName":"localhost"
-        ,"UserMicroServicePort":"9090"
+        ,"UserMicroServicePort":"9090",
+        "ProductsMicroServicePort":"8080",
+"ProductsMicroServiceName":"localhost"
+,"MONGODB_USER": "admin",           
+    "MONGODB_PASSWORD": "adminpassword"
+
+
 
       },
       "dotnetRunMessages": true,
@@ -40,9 +52,14 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-                 "MONGODB_DATABASE":"OrderMangement"
+                 "MONGODB_DATABASE":"OrdersDatabase"
       ,"UserMicroServiceName":"localhost"
-      ,"UserMicroServicePort":"9090"
+      ,"UserMicroServicePort":"9090",
+"ProductsMicroServicePort":"8080",
+"ProductsMicroServiceName":"localhost"
+,"MONGODB_USER": "admin",           
+    "MONGODB_PASSWORD": "adminpassword"
+
 
       }
     },
@@ -53,9 +70,15 @@
       "environmentVariables": {
         "ASPNETCORE_HTTPS_PORTS": "8081",
         "ASPNETCORE_HTTP_PORTS": "8080",
-                 "MONGODB_DATABASE":"OrderMangement"
+                 "MONGODB_DATABASE":"OrdersDatabase"
       ,"UserMicroServiceName":"localhost"
-      ,"UserMicroServicePort":"9090"
+      ,"UserMicroServicePort":"9090",
+      "ProductsMicroServicePort":"8080",
+"ProductsMicroServiceName":"localhost"
+,"MONGODB_USER": "admin",           
+    "MONGODB_PASSWORD": "adminpassword"
+
+
 
       },
       "publishAllPorts": true,

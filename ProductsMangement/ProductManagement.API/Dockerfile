@@ -22,5 +22,6 @@ COPY --from=publish /app/publish .
 ENV MYSQL_HOST=localhost
 ENV MYSQL_PASSWORD=admin
 ENV PortNumber=3306
+ENV MYSQL_DATABASE=ProductsDataBase
 
 ENTRYPOINT ["dotnet", "ProductManagement.API.dll"]

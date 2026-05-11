@@ -17,6 +17,8 @@ public static class DependencyInjection
    string NewConnectionUsingEnviroment= mymainconnectionstring
    .Replace("$MYSQL_HOST",Environment.GetEnvironmentVariable("MYSQL_HOST")).
    Replace("$MYSQL_PASSWORD",Environment.GetEnvironmentVariable("MYSQL_PASSWORD")).
+   Replace("$MYSQL_DATABASE",Environment.GetEnvironmentVariable("MYSQL_DATABASE")).
+
    Replace("$PortNumber",Environment.GetEnvironmentVariable("PortNumber"));
 
     services.AddDbContext<DataContext>(options => {
