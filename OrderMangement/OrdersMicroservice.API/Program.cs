@@ -3,6 +3,8 @@ using OrderMangement.BusinessLogicLayer;
 using FluentValidation.AspNetCore;
 using OrderMangement.BusinessLogicLayer.HttpClients;
 using OrderMangement.API.Middleware;
+using Polly;
+using OrderMangement.BusinessLogicLayer.Ploicies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,12 +29,20 @@ builder.Services.AddCors(options =>
   });
 });
 
-// for the part of the http client 
+// for the part of the http client  and alsow we will add the fault tolerance using the polly 
+builder.Services.AddTransient<IUsersMicroservicePolicies, UsersMicroservicePolicies>();
 
 builder.Services.AddHttpClient<UserMicroserviceClient>(client =>
 {
   client.BaseAddress=new Uri($"http://{builder.Configuration["UserMicroServiceName"]}:{builder.Configuration["UserMicroServicePort"]}");
-});
+}).AddPolicyHandler(
+// here we will get the policy directly from the policies service 
+   builder.Services.BuildServiceProvider().GetRequiredService<IUsersMicroservicePolicies>().GetRetryPolicy()
+);
+
+
+
+
 
 builder.Services.AddHttpClient<ProductMicroserviceClient>(client =>
 {
