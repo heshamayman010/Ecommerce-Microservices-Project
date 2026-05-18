@@ -2,7 +2,7 @@ var orders = [
     {
         "_id": "4d9b6010-48e6-4a0e-bd4e-461c85c32c1d",
         "OrderID": "4d9b6010-48e6-4a0e-bd4e-461c85c32c1d",
-        "UserID": "c32f8b42-60e6-4c02-90a7-9143ab37189f",
+        "UserID": "08556760-b6a6-4e0e-874f-db2f09b8889a",
         "OrderDate": "2050-10-20T08:00:00",
         "TotalBill": 2799.98,
         "OrderItems": [
@@ -23,7 +23,7 @@ var orders = [
     {
         "_id": "62c2fb9c-b36e-497e-b0b7-f07c6c3c22b2",
         "OrderID": "62c2fb9c-b36e-497e-b0b7-f07c6c3c22b2",
-        "UserID": "8ff22c7d-18c7-4ef0-a0ac-988ecb2ac7f5",
+        "UserID": "08556760-b6a6-4e0e-874f-db2f09b8889a",
         "OrderDate": "2050-10-21T09:00:00",
         "TotalBill": 969.95,
         "OrderItems": [
@@ -44,7 +44,7 @@ var orders = [
     {
         "_id": "e3f6d6b7-bc84-48e3-8d22-961e1e084f0e",
         "OrderID": "e3f6d6b7-bc84-48e3-8d22-961e1e084f0e",
-        "UserID": "8ff22c7d-18c7-4ef0-a0ac-988ecb2ac7f5",
+        "UserID": "08556760-b6a6-4e0e-874f-db2f09b8889a",
         "OrderDate": "2050-10-22T10:00:00",
         "TotalBill": 5499.88,
         "OrderItems": [
@@ -65,7 +65,7 @@ var orders = [
     {
         "_id": "af168b29-b6c5-45ed-a4f1-19c04f368d1a",
         "OrderID": "af168b29-b6c5-45ed-a4f1-19c04f368d1a",
-        "UserID": "8ff22c7d-18c7-4ef0-a0ac-988ecb2ac7f5",
+        "UserID": "08556760-b6a6-4e0e-874f-db2f09b8889a",
         "OrderDate": "2050-10-23T11:00:00",
         "TotalBill": 5039.94,
         "OrderItems": [
@@ -86,7 +86,7 @@ var orders = [
     {
         "_id": "3a0e5c1a-446e-4e0c-90dc-b87e0576cf36",
         "OrderID": "3a0e5c1a-446e-4e0c-90dc-b87e0576cf36",
-        "UserID": "8ff22c7d-18c7-4ef0-a0ac-988ecb2ac7f5",
+        "UserID": "08556760-b6a6-4e0e-874f-db2f09b8889a",
         "OrderDate": "2050-10-24T12:00:00",
         "TotalBill": 6679.94,
         "OrderItems": [
@@ -107,7 +107,7 @@ var orders = [
     {
         "_id": "a07e908e-57b1-49f0-b18e-4860b0948cf2",
         "OrderID": "a07e908e-57b1-49f0-b18e-4860b0948cf2",
-        "UserID": "8ff22c7d-18c7-4ef0-a0ac-988ecb2ac7f5",
+        "UserID": "08556760-b6a6-4e0e-874f-db2f09b8889a",
         "OrderDate": "2050-10-25T13:00:00",
         "TotalBill": 859.96,
         "OrderItems": [
@@ -128,7 +128,7 @@ var orders = [
     {
         "_id": "b8f3fbfc-5648-40f8-bb51-f158b32f77d9",
         "OrderID": "b8f3fbfc-5648-40f8-bb51-f158b32f77d9",
-        "UserID": "c32f8b42-60e6-4c02-90a7-9143ab37189f",
+        "UserID": "08556760-b6a6-4e0e-874f-db2f09b8889a",
         "OrderDate": "2050-10-26T14:00:00",
         "TotalBill": 2849.97,
         "OrderItems": [
@@ -149,7 +149,7 @@ var orders = [
     {
         "_id": "c6a05e2e-81c0-4a43-80d1-8fd6936318e2",
         "OrderID": "c6a05e2e-81c0-4a43-80d1-8fd6936318e2",
-        "UserID": "c32f8b42-60e6-4c02-90a7-9143ab37189f",
+        "UserID": "08556760-b6a6-4e0e-874f-db2f09b8889a",
         "OrderDate": "2050-10-27T15:00:00",
         "TotalBill": 9499.94,
         "OrderItems": [
@@ -170,7 +170,7 @@ var orders = [
     {
         "_id": "d66c9b87-0f4b-482d-b87b-fc5b96b59871",
         "OrderID": "d66c9b87-0f4b-482d-b87b-fc5b96b59871",
-        "UserID": "c32f8b42-60e6-4c02-90a7-9143ab37189f",
+        "UserID": "08556760-b6a6-4e0e-874f-db2f09b8889a",
         "OrderDate": "2050-10-28T16:00:00",
         "TotalBill": 2999.98,
         "OrderItems": [
@@ -191,7 +191,7 @@ var orders = [
     {
         "_id": "e2a3ff6b-ba0e-463e-bc07-aa4421317a53",
         "OrderID": "e2a3ff6b-ba0e-463e-bc07-aa4421317a53",
-        "UserID": "c32f8b42-60e6-4c02-90a7-9143ab37189f",
+        "UserID": "08556760-b6a6-4e0e-874f-db2f09b8889a",
         "OrderDate": "2024-03-01T17:00:00",
         "TotalBill": 9679.26,
         "OrderItems": [
@@ -219,6 +219,6 @@ var orders = [
 console.log(orders);
 
 //Switch to your database
-var db = db.getSiblingDB("OrdersDatabase");
+var db = db.getSiblingDB("OrderMangement");
 
 db.orders.insertMany(orders);

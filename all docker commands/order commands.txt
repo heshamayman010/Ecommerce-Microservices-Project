@@ -1,1 +1,9 @@
 docker run -it --name orders -p 5043:8080 -e MONGODB_HOST=localhost -e MONGODB_PORT=27017 -e MONGODB_DATABASE=OrderMangement -e MONGODB_USER=admin -e MONGODB_PASSWORD=adminpassword -e UserMicroServiceName=localhost -e UserMicroServicePort=9090 -e ProductsMicroServiceName=localhost -e ProductsMicroServicePort=8080 --network Ecommerce heshamayman0/orderimage:V1.2
+
+
+
+
+
+for mongo 
+
+docker run --rm -it --name mongo-db --network ProductsNetwork -p 27017:27017 -e MONGODB_INITDB_ROOT_USERNAME=admin -e MONGODB_INITDB_ROOT_PASSWORD=adminpassword -v "D:\Micro Services Course\Mine\DataBase\mogo\:/docker-entrypoint-initdb.d" mongodb/mongodb-community-server:8.0-ubi8

@@ -12,6 +12,7 @@ services:
     networks:
       - Ecommerce-network
 
+
   product-api:
     image: heshamayman0/productimage:v1.2
     container_name: product-api
@@ -27,6 +28,7 @@ services:
     networks:
       - Ecommerce-network
 
+
   postgres-db:
     image: postgres:18
     container_name: postgres-db
@@ -40,6 +42,7 @@ services:
       - "D:/Micro Services Course/Mine/DataBase/postgress/sql2.sql:/docker-entrypoint-initdb.d/sql2.sql"
     networks:
       - Ecommerce-network
+
 
   user-api:
     image: heshamayman0/userimage:V1.2
@@ -56,6 +59,7 @@ services:
     networks:
       - Ecommerce-network
 
+
   mongodb:
     image: mongodb/mongodb-community-server:8.0-ubi8
     container_name: mongo-db
@@ -66,6 +70,28 @@ services:
       - "27017:27017"
     volumes:
       - "D:/Micro Services Course/Mine/DataBase/mongo:/docker-entrypoint-initdb.d"
+    networks:
+      - Ecommerce-network
+
+  orders-api:
+    image: heshamayman0/orderimage:V1.2
+    container_name: orders
+    depends_on:
+      - mongodb
+      - user-api
+      - product-api
+    environment:
+      - MONGODB_HOST=mongo-db
+      - MONGODB_PORT=27017
+      - MONGODB_DATABASE=OrderMangement
+      - MONGODB_USER=admin
+      - MONGODB_PASSWORD=adminpassword
+      - UserMicroServiceName=user-api
+      - UserMicroServicePort=9090
+      - ProductsMicroServiceName=product-api
+      - ProductsMicroServicePort=8080
+    ports:
+      - "5043:8080"
     networks:
       - Ecommerce-network
 
