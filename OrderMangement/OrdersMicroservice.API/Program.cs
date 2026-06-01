@@ -31,14 +31,17 @@ builder.Services.AddCors(options =>
 
 // for the part of the http client  and alsow we will add the fault tolerance using the polly 
 builder.Services.AddTransient<IUsersMicroservicePolicies, UsersMicroservicePolicies>();
+builder.Services.AddTransient<IProductsMicroservicePolicies,ProductsMicroservicePolicies>();
+
 
 builder.Services.AddHttpClient<UserMicroserviceClient>(client =>
 {
   client.BaseAddress=new Uri($"http://{builder.Configuration["UserMicroServiceName"]}:{builder.Configuration["UserMicroServicePort"]}");
-}).AddPolicyHandler(
+})
 // here we will get the policy directly from the policies service 
-   builder.Services.BuildServiceProvider().GetRequiredService<IUsersMicroservicePolicies>().GetRetryPolicy()
-);
+  .AddPolicyHandler(
+   builder.Services.BuildServiceProvider().GetRequiredService<IUsersMicroservicePolicies>().GetCombinedPolicy())
+   ;
 
 
 
@@ -46,8 +49,15 @@ builder.Services.AddHttpClient<UserMicroserviceClient>(client =>
 
 builder.Services.AddHttpClient<ProductMicroserviceClient>(client =>
 {
-  client.BaseAddress=new Uri($"http://{builder.Configuration["ProductsMicroServiceName"]}:{builder.Configuration["ProductsMicroServicePort"]}");
-});
+  client.BaseAddress=new Uri($"http://{builder.Configuration["ProductsMicroServiceName"]}:{builder.Configuration["ProductsMicroServicePort"]}");})
+  //   .AddPolicyHandler(
+  .AddPolicyHandler(
+   builder.Services.BuildServiceProvider().GetRequiredService<IProductsMicroservicePolicies>().GetFallbackPolicy())
+
+  .AddPolicyHandler(
+   builder.Services.BuildServiceProvider().GetRequiredService<IProductsMicroservicePolicies>().GetBulkheadIsolationPolicy())
+
+  ;
 
 
 

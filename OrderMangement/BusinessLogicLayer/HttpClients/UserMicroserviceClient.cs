@@ -14,29 +14,41 @@ public class UserMicroserviceClient
     }
 
 
-    public async Task<UserDTO?>GetUserByUserId(Guid userid)
-    {
-        
-      HttpResponseMessage response=await  _httpClient.GetAsync($"/api/users/{userid}");
+  public async Task<UserDTO?> GetUserByUserID(Guid userID)
+  {
+    HttpResponseMessage response = await _httpClient.GetAsync($"/api/users/{userID}");
 
     if (!response.IsSuccessStatusCode)
-        {
-            return null;
-        }
-
-        // we must use the read from json async 
-var user=  response.Content.ReadFromJsonAsync<UserDTO>();
-
-        if (user == null)
-        {
-            throw new ArgumentException("user Cant be found ");
-
-        }
-        
-        return await user; 
-
+    {
+      if (response.StatusCode == System.Net.HttpStatusCode.NotFound) 
+      {
+        return null;
+      }
+      else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+      {
+        throw new HttpRequestException("Bad request", null, System.Net.HttpStatusCode.BadRequest);
+      }
+      else
+      {
+        //throw new HttpRequestException($"Http request failed with status code {response.StatusCode}");
+        return new UserDTO(){
+       PersonName   = "Temporarily Unavailable",
+          Email= "Temporarily Unavailable",
+          Gender= "Temporarily Unavailable",
+          UserID= Guid.Empty};
+      }
     }
 
 
+    UserDTO? user = await response.Content.ReadFromJsonAsync<UserDTO>();
 
+    if (user == null) 
+    {
+      throw new ArgumentException("Invalid User ID");
+    }
+
+    return user;
+  }
 }
+
+
