@@ -6,7 +6,7 @@ services:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: ProductsDataBase
     ports:
-      - "3306:3306"
+      - "3309:3306"
     volumes:
       - "D:/Micro Services Course/Mine/DataBase/MySql/sql1.sql:/docker-entrypoint-initdb.d/sql1.sql"
     networks:
@@ -14,7 +14,7 @@ services:
 
 
   product-api:
-    image: heshamayman0/productimage:v1.2
+    image: heshamayman0/productimage:latest
     container_name: product-api
     depends_on:
       - mysql-db
@@ -45,7 +45,7 @@ services:
 
 
   user-api:
-    image: heshamayman0/userimage:V1.2
+    image: heshamayman0/userimage:latest
     container_name: user-api
     depends_on:
       - postgres-db
@@ -74,7 +74,7 @@ services:
       - Ecommerce-network
 
   orders-api:
-    image: heshamayman0/orderimage:V1.2
+    image: heshamayman0/orderimage:latest
     container_name: orders
     depends_on:
       - mongodb
@@ -90,10 +90,22 @@ services:
       - UserMicroServicePort=9090
       - ProductsMicroServiceName=product-api
       - ProductsMicroServicePort=8080
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
     ports:
       - "5043:8080"
     networks:
       - Ecommerce-network
+
+  redis:
+   image: redis:latest
+   ports:
+    - "6379:6379"
+   volumes:
+    - D:\Micro Services Course\Mine\redis-cache:/data
+   networks:
+    - Ecommerce-network
 
 networks:
   Ecommerce-network:

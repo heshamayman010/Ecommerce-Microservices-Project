@@ -49,6 +49,7 @@ export class CartComponent {
   placeOrder(): void {
     this.cartService.newOrder().subscribe({
       next: (response: OrderResponse) => {
+        this.cartService.clearCartItems();
         if (response)
           this.router.navigate(['orders']);
       },

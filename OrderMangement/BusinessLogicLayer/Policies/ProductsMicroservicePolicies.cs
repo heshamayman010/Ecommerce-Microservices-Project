@@ -22,7 +22,7 @@ public class ProductsMicroservicePolicies : IProductsMicroservicePolicies
   public IAsyncPolicy<HttpResponseMessage> GetBulkheadIsolationPolicy()
   {
     AsyncBulkheadPolicy<HttpResponseMessage> policy = Policy.BulkheadAsync<HttpResponseMessage>(
-      maxParallelization: 2, //Allows up to 2 concurrent requests
+      maxParallelization: 80, //Allows up to 2 concurrent requests
       maxQueuingActions: 40, //Queue up to 40 additional requests
       onBulkheadRejectedAsync: (context) => {
         _logger.LogWarning("BulkheadIsolation triggered. Can't send any more requests since the queue is full");
@@ -42,14 +42,17 @@ public class ProductsMicroservicePolicies : IProductsMicroservicePolicies
       {
         _logger.LogWarning("Fallback triggered: The request failed, returning dummy data");
 
-        ProductDto product = new ProductDto(){ProductID= Guid.Empty,
+        ProductDto product = new ProductDto()
+        {
+          ProductID= Guid.Empty,
           ProductName= "Temporarily Unavailable (fallback)",
           Category= "Temporarily Unavailable (fallback)",
           UnitPrice= 0,
-          QuantityInStock= 0}
+          QuantityInStock= 0
+          }
           ;
 
-        var response = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+        var response = new HttpResponseMessage(System.Net.HttpStatusCode.ServiceUnavailable)
         {
           Content = new StringContent(JsonSerializer.Serialize(product), Encoding.UTF8, "application/json")
         };

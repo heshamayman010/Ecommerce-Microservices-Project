@@ -8,40 +8,36 @@
         "MONGODB_HOST": "localhost",
         "MONGODB_PORT": "27017",
 
-         "MONGODB_DATABASE":"OrdersDatabase"
-      ,"UserMicroServiceName":"localhost"
-      ,"UserMicroServicePort":"9090",
-      "ProductsMicroServicePort":"8080",
-"ProductsMicroServiceName":"localhost"
-,"MONGODB_USER": "admin",           
-    "MONGODB_PASSWORD": "adminpassword"
-
-
-
+        "MONGODB_DATABASE": "OrdersDatabase",
+        "UserMicroServiceName": "localhost",
+        "UserMicroServicePort": "9090",
+        "ProductsMicroServicePort": "8080",
+        "ProductsMicroServiceName": "localhost",
+        "MONGODB_USER": "admin",
+        "MONGODB_PASSWORD": "adminpassword",
+        "REDIS_HOST": "localhost",
+        "REDIS_PORT": "6379"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5043",
       "launchUrl": "swagger"
     },
-    "https":
-    {
+    "https": {
       "commandName": "Project",
       "launchBrowser": true,
-      "environmentVariables":
-      {
+      "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "MONGODB_HOST": "localhost",
         "MONGODB_PORT": "27017",
-                 "MONGODB_DATABASE":"OrdersDatabase"
-        ,"UserMicroServiceName":"localhost"
-        ,"UserMicroServicePort":"9090",
-        "ProductsMicroServicePort":"8080",
-"ProductsMicroServiceName":"localhost"
-,"MONGODB_USER": "admin",           
-    "MONGODB_PASSWORD": "adminpassword"
-
-
-
+        "MONGODB_DATABASE": "OrdersDatabase",
+        "UserMicroServiceName": "localhost",
+        "UserMicroServicePort": "9090",
+        "ProductsMicroServicePort": "8080",
+        "ProductsMicroServiceName": "localhost",
+        "MONGODB_USER": "admin",
+        "MONGODB_PASSWORD": "adminpassword",
+        "REDIS_HOST": "localhost",
+        "REDIS_PORT": "6379"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7059;http://localhost:5043",
@@ -52,15 +48,15 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-                 "MONGODB_DATABASE":"OrdersDatabase"
-      ,"UserMicroServiceName":"localhost"
-      ,"UserMicroServicePort":"9090",
-"ProductsMicroServicePort":"8080",
-"ProductsMicroServiceName":"localhost"
-,"MONGODB_USER": "admin",           
-    "MONGODB_PASSWORD": "adminpassword"
-
-
+        "MONGODB_DATABASE": "OrdersDatabase",
+        "UserMicroServiceName": "localhost",
+        "UserMicroServicePort": "9090",
+        "ProductsMicroServicePort": "8080",
+        "ProductsMicroServiceName": "localhost",
+        "MONGODB_USER": "admin",
+        "MONGODB_PASSWORD": "adminpassword",
+        "REDIS_HOST": "localhost",
+        "REDIS_PORT": "6379"
       }
     },
     "Container (Dockerfile)": {
@@ -70,16 +66,15 @@
       "environmentVariables": {
         "ASPNETCORE_HTTPS_PORTS": "8081",
         "ASPNETCORE_HTTP_PORTS": "8080",
-                 "MONGODB_DATABASE":"OrdersDatabase"
-      ,"UserMicroServiceName":"localhost"
-      ,"UserMicroServicePort":"9090",
-      "ProductsMicroServicePort":"8080",
-"ProductsMicroServiceName":"localhost"
-,"MONGODB_USER": "admin",           
-    "MONGODB_PASSWORD": "adminpassword"
-
-
-
+        "MONGODB_DATABASE": "OrdersDatabase",
+        "UserMicroServiceName": "localhost",
+        "UserMicroServicePort": "9090",
+        "ProductsMicroServicePort": "8080",
+        "ProductsMicroServiceName": "localhost",
+        "MONGODB_USER": "admin",
+        "MONGODB_PASSWORD": "adminpassword",
+        "REDIS_HOST": "localhost",
+        "REDIS_PORT": "6379"
       },
       "publishAllPorts": true,
       "useSSL": true

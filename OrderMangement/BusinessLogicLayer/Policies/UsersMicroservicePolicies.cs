@@ -1,6 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Text;
+using System.Text.Json;
+using Microsoft.Extensions.Logging;
+using OrderMangement.BusinessLogicLayer.DTO;
 using Polly;
 using Polly.CircuitBreaker;
+using Polly.Fallback;
 using Polly.Retry;
 using Polly.Timeout;
 using Polly.Wrap;
@@ -36,7 +40,7 @@ public class UsersMicroservicePolicies : IUsersMicroservicePolicies
   {
     AsyncCircuitBreakerPolicy<HttpResponseMessage> policy = Policy.HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
   .CircuitBreakerAsync(
-     handledEventsAllowedBeforeBreaking: 3, 
+     handledEventsAllowedBeforeBreaking: 20, 
      durationOfBreak: TimeSpan.FromMinutes(2), 
      onBreak: (outcome, timespan) =>
      {
@@ -52,19 +56,52 @@ public class UsersMicroservicePolicies : IUsersMicroservicePolicies
 
   public IAsyncPolicy<HttpResponseMessage> GetTimeoutPolicy()
   {
-    AsyncTimeoutPolicy<HttpResponseMessage> policy = Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromMilliseconds(1500));
+    AsyncTimeoutPolicy<HttpResponseMessage> policy = Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromMinutes(2));
 
     return policy;
   }
 
+  public IAsyncPolicy<HttpResponseMessage> GetFallbackPolicy()
+  {
+    AsyncFallbackPolicy<HttpResponseMessage> policy = Policy.HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
+      .FallbackAsync(async (context) =>
+      {
+        _logger.LogWarning("Fallback triggered: The request failed, returning dummy data");
+
+        UserDTO user = new UserDTO(){
+          UserID= Guid.Empty,
+          Email = "Temporarily Unavailable (fallback)",
+          PersonName= "Temporarily Unavailable (fallback)",
+          Gender=  "Temporarily Unavailable (fallback)",
+          }
+          ;
+
+        var response = new HttpResponseMessage(System.Net.HttpStatusCode.ServiceUnavailable)
+        {
+          Content = new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json")
+        };
+
+        return response;
+      });
+
+    return policy;
+  }
 
   public IAsyncPolicy<HttpResponseMessage> GetCombinedPolicy()
   {
+
     var retryPolicy = GetRetryPolicy();
     var circuitBreakerPolicy = GetCircuitBreakerPolicy();
     var timeoutPolicy = GetTimeoutPolicy();
+    var fallbackPolicy = GetFallbackPolicy();
+    
+    var wrappedPolicy = Policy.WrapAsync(
+      fallbackPolicy,      
+      timeoutPolicy,       
+      circuitBreakerPolicy,  
+      retryPolicy         
+    );
 
-    AsyncPolicyWrap<HttpResponseMessage> wrappedPolicy = Policy.WrapAsync(retryPolicy, circuitBreakerPolicy, timeoutPolicy);
     return wrappedPolicy;
   }
 }

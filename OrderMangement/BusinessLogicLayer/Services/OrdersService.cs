@@ -54,9 +54,9 @@ public class OrdersService : IOrdersService
 
     // here we will check if the user id exist or not but it is from another microservices
 
-    // get it back when working with users 
+    // get it back when working with users   hesham
 
-    UserDTO? user = await _usermicorserviceclient.GetUserByUserId(orderAddRequest.UserID);
+    UserDTO? user = await _usermicorserviceclient.GetUserByUserID(orderAddRequest.UserID);
 
     if (user == null)
     {
@@ -177,7 +177,7 @@ Products.Add(product);
     }
 
     // here we will check if the user id exist or not but it is from another microservices 
-    UserDTO? user = await _usermicorserviceclient.GetUserByUserId(orderUpdateRequest.UserID);
+    UserDTO? user = await _usermicorserviceclient.GetUserByUserID(orderUpdateRequest.UserID);
 
     if (user == null)
     
@@ -277,7 +277,7 @@ Products.Add(product);
       
 
       }
-    var userback=await _usermicorserviceclient.GetUserByUserId(orderResponse.UserID);
+    var userback=await _usermicorserviceclient.GetUserByUserID(orderResponse.UserID);
 
     if (userback != null)
           {
@@ -322,7 +322,7 @@ Products.Add(product);
         _mapper.Map<ProductDto,OrderItemResponse>(orderproduct,orderitem);
       
       }
-var userback=await _usermicorserviceclient.GetUserByUserId(orderr.UserID);
+var userback=await _usermicorserviceclient.GetUserByUserID(orderr.UserID);
 
 if (userback != null)
       {
@@ -370,7 +370,7 @@ if (userback != null)
         _mapper.Map<ProductDto,OrderItemResponse>(orderproduct,orderitem);
       
       }
-var userback=await _usermicorserviceclient.GetUserByUserId(orderr.UserID);
+var userback=await _usermicorserviceclient.GetUserByUserID(orderr.UserID);
 
 if (userback != null)
       {
