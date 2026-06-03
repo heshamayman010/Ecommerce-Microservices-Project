@@ -86,15 +86,23 @@ services:
       - MONGODB_DATABASE=OrderMangement
       - MONGODB_USER=admin
       - MONGODB_PASSWORD=adminpassword
-      - UserMicroServiceName=user-api
-      - UserMicroServicePort=9090
-      - ProductsMicroServiceName=product-api
+      - UserMicroServiceName=apigateway
+      - UserMicroServicePort=8080
+      - ProductsMicroServiceName=apigateway
       - ProductsMicroServicePort=8080
       - REDIS_HOST=redis
       - REDIS_PORT=6379
 
     ports:
       - "5043:8080"
+    networks:
+      - Ecommerce-network
+
+  apigateway:
+    image: heshamayman0/apigateway:latest
+    container_name: apigateway
+    ports:
+      - "4000:8080"
     networks:
       - Ecommerce-network
 

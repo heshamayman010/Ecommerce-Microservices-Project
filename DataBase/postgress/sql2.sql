@@ -13,9 +13,9 @@ CREATE TABLE IF NOT EXISTS public."Users"
 INSERT INTO public."Users" ("UserID", "PersonName", "Email", "Password", "Gender") VALUES 
 (
     'f47ac10b-58cc-4372-a567-0e02b2c3d479'::uuid,  
-    'Hesham',
+    'hesham',
     'hesham@gmail.com',
-    'admin',
+    'hesham',
     'Male'
 ),
 (

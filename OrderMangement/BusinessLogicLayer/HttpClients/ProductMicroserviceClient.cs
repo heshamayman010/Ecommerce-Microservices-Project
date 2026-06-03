@@ -43,7 +43,7 @@ public class ProductMicroserviceClient
             // now if the product is not in the cache so we need to get it from the product service and then store it 
             // in the cache 
 
-            HttpResponseMessage response = await _httpClient.GetAsync($"/api/products/search/product-id/{ProductId}");
+            HttpResponseMessage response = await _httpClient.GetAsync($"/gateway/products/search/product-id/{ProductId}");
 
             if (!response.IsSuccessStatusCode)
             {
