@@ -18,11 +18,18 @@ services:
     container_name: product-api
     depends_on:
       - mysql-db
+      - rabbitmq 
     environment:
       - MYSQL_HOST=mysql-db
       - MYSQL_PASSWORD=admin
       - PortNumber=3306
       - MYSQL_DATABASE=ProductsDataBase
+      - RabbitMQ_HostName=rabbitmq
+      - RabbitMQ_UserName=user
+      - RabbitMQ_Password=password
+      - RabbitMQ_Port=5672
+      - RabbitMQ_Products_Exchange=product.exchange
+
     ports:
       - "8080:8080"
     networks:
@@ -80,6 +87,7 @@ services:
       - mongodb
       - user-api
       - product-api
+      - rabbitmq 
     environment:
       - MONGODB_HOST=mongo-db
       - MONGODB_PORT=27017
@@ -92,6 +100,12 @@ services:
       - ProductsMicroServicePort=8080
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - RabbitMQ_HostName=rabbitmq
+      - RabbitMQ_UserName=user
+      - RabbitMQ_Password=password
+      - RabbitMQ_Port=5672
+      - RabbitMQ_Products_Exchange=product.exchange
+
 
     ports:
       - "5043:8080"
@@ -112,6 +126,18 @@ services:
     - "6379:6379"
    volumes:
     - D:\Micro Services Course\Mine\redis-cache:/data
+   networks:
+    - Ecommerce-network
+
+
+  rabbitmq:
+   image: rabbitmq:3.13-management
+   ports:
+    - "5672:5672"
+    - "15672:15672"
+   environment:
+    - RABBITMQ_DEFAULT_USER=user
+    - RABBITMQ_DEFAULT_PASS=password
    networks:
     - Ecommerce-network
 
