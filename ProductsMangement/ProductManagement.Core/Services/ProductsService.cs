@@ -71,9 +71,15 @@ public class ProductsService : IProductsService
     if (isDeleted)
     {
       ProductDeletionMessage message = new ProductDeletionMessage(existingProduct.ProductID, existingProduct.ProductName);
-      string routingKey = "product.delete";
+      //string routingKey = "product.delete";
 
-      _rabbitMQPublisher.Publish(routingKey, message);
+      var headers = new Dictionary<string, object>() 
+      {
+        { "event", "product.delete" },
+        { "RowCount", 1 }
+      };
+
+      _rabbitMQPublisher.Publish(headers, message);
     }
 
 
@@ -140,10 +146,16 @@ public class ProductsService : IProductsService
 
         if (isProductNameChanged)
     {
-      string routingKey = "product.update.name";
       var message = new ProductNameUpdateMessage(product.ProductID, product.ProductName);
 
-      _rabbitMQPublisher.Publish<ProductNameUpdateMessage>(routingKey, message);
+      var headers = new Dictionary<string, object>()
+      {
+        { "event", "product.update" },
+        { "field", "name" },
+        { "RowCount", 1 }
+      };
+            _rabbitMQPublisher.Publish<ProductNameUpdateMessage>(headers, message);
+
     }
 
 
